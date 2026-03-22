@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Oriflamania App</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ro:#1a4fad;--tu:#0aadb5;--rl:#e8eef9;--tl:#e0f7f8;--b:rgba(26,79,173,0.12);--m:#7a8aaa;--go:#c9a227;--gl:#fef9e7}
+body{font-family:system-ui,sans-serif;background:#e8eef9;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:1rem 0}
+.phone{width:390px;background:#f4f7fc;border-radius:28px;border:.5px solid var(--b);overflow:hidden;position:relative;box-shadow:0 8px 40px rgba(26,79,173,.15)}
+.sb{background:#fff;padding:10px 18px 6px;display:flex;justify-content:space-between}
+.sb span{color:var(--m);font-size:11px}
+.sc{display:none}.sc.on{display:block}
+.scr{height:560px;overflow-y:auto;scrollbar-width:none}
+.scr::-webkit-scrollbar{display:none}
+.L{display:inline-flex;align-items:center;line-height:1}
+.L svg{display:block}
+.L span{font-weight:500;color:var(--ro);letter-spacing:-.01em;line-height:1}
+.nav{background:#fff;padding:8px 14px 10px;display:flex;align-items:center;justify-content:space-between;border-bottom:.5px solid var(--b)}
+.ni{width:30px;height:30px;border-radius:9px;background:var(--rl);display:flex;align-items:center;justify-content:center}
+.ni svg{width:14px;height:14px;stroke:var(--ro);fill:none;stroke-width:2}
+.bn{background:#fff;border-top:.5px solid var(--b);display:flex;padding:8px 0 14px}
+.bni{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer}
+.bni svg{width:20px;height:20px;stroke:var(--m);fill:none;stroke-width:1.5}
+.bni.on svg{stroke:var(--ro)}
+.bni span{font-size:9px;color:var(--m)}
+.bni.on span{color:var(--ro);font-weight:500}
+.sh{background:#fff;padding:10px 14px;display:flex;align-items:center;gap:10px;border-bottom:.5px solid var(--b)}
+.bk{width:28px;height:28px;background:var(--rl);border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.bk svg{width:13px;height:13px;stroke:var(--ro);fill:none;stroke-width:2}
+.stit{font-size:14px;font-weight:500;color:var(--ro)}
+.w{padding:14px 16px 24px}
+.fl{font-size:10px;font-weight:500;color:var(--m);letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px;display:block}
+.fi{width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid var(--b);background:#fff;font-size:13px;outline:none;display:block;margin-bottom:10px}
+.pw-wrap{display:flex;align-items:center;background:#fff;border:1.5px solid var(--b);border-radius:10px;margin-bottom:10px;overflow:hidden}
+.pw-wrap input{flex:1;border:none;outline:none;padding:10px 8px 10px 12px;font-size:13px;background:transparent}
+.pw-wrap button{background:none;border:none;padding:0 10px;cursor:pointer;display:flex;align-items:center;flex-shrink:0}
+.pw-wrap button svg{width:16px;height:16px;stroke:var(--m);fill:none;stroke-width:2}
+.btn{display:block;width:100%;padding:12px;border-radius:11px;font-size:13px;font-weight:500;cursor:pointer;text-align:center;border:none;margin-bottom:8px}
+.bp{background:var(--ro);color:#fff}
+.bo{background:transparent;color:var(--ro);border:1.5px solid var(--ro)!important}
+.bg2{background:rgba(255,255,255,.6);color:var(--m);border:1.5px solid rgba(26,79,173,.2)!important;font-size:12px}
+.dvd{display:flex;align-items:center;gap:8px;margin:4px 0 8px}
+.dvl{flex:1;height:.5px;background:rgba(26,79,173,.15)}
+.dvt{font-size:10px;color:var(--m)}
+.ib{border-radius:10px;padding:10px 12px;font-size:11px;line-height:1.5;margin-bottom:10px;background:var(--rl);color:var(--ro)}
+.ibt{background:var(--tl);color:#0a7a80}
+.ibg{background:var(--gl);color:#7a5500}
+.tc{font-size:10px;color:var(--m);text-align:center;margin-top:8px}
+.tc a{color:var(--ro);cursor:pointer}
+.slbl{font-size:10px;font-weight:500;color:var(--m);letter-spacing:.07em;text-transform:uppercase;margin:8px 0 6px}
+.opt{background:#fff;border:1.5px solid var(--b);border-radius:13px;margin-bottom:8px;padding:12px 13px;cursor:pointer;display:flex;align-items:center;gap:11px}
+.oi{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.or{background:var(--rl)}.ot{background:var(--tl)}.og{background:var(--gl)}
+.ott{font-size:12px;font-weight:500;color:#1a1a2e;margin-bottom:2px}
+.os{font-size:10px;color:var(--m)}
+.arr{font-size:16px;color:var(--m);margin-left:auto}
+.sech{display:flex;align-items:center;justify-content:space-between;padding:10px 14px 6px}
+.sect{font-size:10px;font-weight:500;color:var(--m);letter-spacing:.07em;text-transform:uppercase}
+.secl{font-size:10px;color:var(--tu);cursor:pointer}
+.bbar{background:rgba(26,79,173,.1);border-radius:5px;height:6px;overflow:hidden;margin-bottom:5px}
+.bfil{height:6px;border-radius:5px;background:linear-gradient(90deg,var(--ro),var(--tu))}
+.hs{display:flex;gap:8px;overflow-x:auto;padding:0 12px 10px;scrollbar-width:none}
+.hs::-webkit-scrollbar{display:none}
+.pc{min-width:108px;background:#fff;border-radius:12px;border:.5px solid var(--b);overflow:hidden;flex-shrink:0}
+.pi{height:78px;background:linear-gradient(135deg,var(--rl),var(--tl));display:flex;align-items:center;justify-content:center;font-size:26px;position:relative}
+.pbg{position:absolute;top:4px;left:4px;background:var(--tu);color:#fff;font-size:8px;font-weight:500;padding:2px 6px;border-radius:20px}
+.pdbg{position:absolute;top:4px;left:4px;background:var(--go);color:#fff;font-size:8px;font-weight:500;padding:2px 6px;border-radius:20px}
+.pin{padding:6px 8px 8px}
+.pn{font-size:10px;font-weight:500;margin-bottom:1px;line-height:1.3}
+.pm{font-size:9px;color:var(--m);margin-bottom:2px}
+.pp{font-size:11px;font-weight:500;color:var(--ro)}
+.pod{background:linear-gradient(135deg,#1a4fad,#0aadb5);border-radius:12px;padding:8px 10px;width:150px;flex-shrink:0}
+.pod-t{font-size:9px;color:rgba(255,255,255,.7);margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em}
+.pod-r{display:flex;align-items:center;gap:4px;padding:2px 0}
+.pod-r span{font-size:10px;color:#fff;font-weight:500}
+.pod-r em{font-size:10px;color:rgba(255,255,255,.8);margin-left:auto;font-style:normal}
+.pod-v{text-align:center;margin-top:5px;padding-top:5px;border-top:1px solid rgba(255,255,255,.2);font-size:9px;color:rgba(255,255,255,.75);cursor:pointer}
+.camp{background:#f4f7fc;margin:8px 12px 0;border-radius:16px;border:1.5px solid #b5d4f4;padding:11px 13px}
+.cpill{display:inline-flex;background:var(--ro);color:#fff;font-size:9px;font-weight:500;padding:2px 9px;border-radius:20px;margin-bottom:8px}
+.csts{display:flex;gap:6px;margin-bottom:8px}
+.cs{background:#fff;border-radius:9px;padding:7px 8px;flex:1;text-align:center;border:.5px solid var(--b)}
+.csv{font-size:12px;font-weight:500;color:var(--ro);line-height:1}
+.csv.t{color:var(--tu)}.csv.g{color:var(--go)}
+.csl{font-size:9px;color:var(--m);margin-top:2px}
+.cft{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.crhy{background:var(--tl);border-radius:7px;padding:2px 8px}
+.crhy span{font-size:10px;color:#0a7a80;font-weight:500}
+.cbtn2{width:100%;padding:8px;border-radius:9px;background:#fff;border:1px solid var(--ro);color:var(--ro);font-size:11px;font-weight:500;cursor:pointer}
+.nudge{margin:8px 12px 0;background:var(--gl);border-radius:12px;border:1px solid rgba(201,162,39,.3);padding:9px 12px;display:flex;align-items:center;gap:9px}
+.nbt{background:var(--go);color:#fff;border:none;border-radius:7px;padding:5px 10px;font-size:10px;font-weight:500;cursor:pointer;white-space:nowrap}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:0 14px 10px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{padding:4px 11px;border-radius:20px;font-size:11px;cursor:pointer;white-space:nowrap;border:.5px solid var(--b);background:#fff;color:var(--m);flex-shrink:0}
+.chip.on{background:var(--ro);color:#fff;border-color:var(--ro)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:0 14px 14px}
+.dh{background:#fff;margin:10px 12px 0;border-radius:16px;border:.5px solid var(--b);padding:13px}
+.dtot{font-size:24px;font-weight:500;color:var(--ro)}
+.dsub{font-size:10px;color:var(--m);margin-top:1px}
+.deq{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;padding:0 12px 4px}
+.deqc{background:#fff;border:.5px solid var(--b);border-radius:12px;padding:10px 7px;text-align:center}
+.deqv{font-size:13px;font-weight:500;color:var(--ro)}
+.deqv.t{color:var(--tu)}.deqv.g{color:var(--go)}
+.deql{font-size:9px;color:var(--m);margin-top:2px}
+.tier-wrap{margin:0 12px 8px;background:#fff;border-radius:16px;border:.5px solid var(--b);overflow:hidden}
+.tier-head{display:grid;grid-template-columns:1.4fr 1fr 1fr;background:var(--ro)}
+.tier-head div{font-size:9px;font-weight:500;color:#fff;padding:7px 8px;letter-spacing:.04em;text-transform:uppercase}
+.tier-row{display:grid;grid-template-columns:1.4fr 1fr 1fr;border-top:.5px solid var(--b)}
+.tier-row.me{background:var(--rl)}
+.tier-row div{font-size:11px;padding:8px;display:flex;align-items:center;gap:3px}
+.tv{color:var(--ro);font-weight:500}
+.tvp{color:var(--tu);font-weight:500}
+.tno{color:#dc2626;font-size:10px}
+.tier-note{padding:8px 10px;font-size:10px;color:var(--m);background:#f8faff;border-top:.5px solid var(--b);line-height:1.5}
+.hist{background:#fff;margin:0 12px 12px;border-radius:16px;border:.5px solid var(--b);overflow:hidden}
+.hr{display:flex;align-items:center;gap:9px;padding:9px 13px;border-top:.5px solid var(--b)}
+.hr:first-child{border-top:none}
+.hia{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hia svg{width:13px;height:13px;fill:none;stroke-width:2}
+.hia2{background:var(--rl)}.hia2 svg{stroke:var(--ro)}
+.hn2{font-size:11px;font-weight:500}
+.hd{font-size:9px;color:var(--m);margin-top:1px}
+.hg{font-size:12px;font-weight:500;color:var(--ro)}
+.cruh{background:#fff;margin:10px 12px 0;border-radius:16px;border:.5px solid var(--b);overflow:hidden}
+.cht{background:linear-gradient(135deg,var(--rl),var(--tl));padding:16px;text-align:center}
+.cht2{font-size:18px;font-weight:500;color:var(--ro);margin-bottom:2px}
+.chs{font-size:11px;color:var(--m)}
+.chd{display:inline-flex;align-items:center;gap:5px;background:#fff;border-radius:20px;padding:3px 10px;margin-top:6px;border:.5px solid var(--b)}
+.chd span{font-size:10px;color:var(--ro);font-weight:500}
+.chb{padding:11px 14px}
+.vc{background:#fff;margin:0 12px;border-radius:16px;border:.5px solid var(--b);padding:12px;margin-bottom:8px}
+.vrow{display:flex;align-items:center;gap:7px;margin-bottom:7px}
+.vrow:last-of-type{margin-bottom:0}
+.vlbl{font-size:11px;width:110px;flex-shrink:0}
+.vbb{flex:1;background:var(--rl);border-radius:4px;height:5px;overflow:hidden}
+.vbf{height:5px;border-radius:4px;background:linear-gradient(90deg,var(--ro),var(--tu))}
+.vpct{font-size:10px;font-weight:500;color:var(--ro);width:28px;text-align:right;flex-shrink:0}
+.mv{margin:8px 0 0;background:var(--rl);border-radius:9px;padding:7px 11px;display:flex;align-items:center;justify-content:space-between}
+.mv span{font-size:10px;color:var(--ro)}
+.mv strong{font-size:10px;color:var(--ro);font-weight:500}
+.mvl{font-size:10px;color:var(--tu);cursor:pointer;text-decoration:underline}
+.rc{background:#fff;margin:0 12px 12px;border-radius:16px;border:.5px solid var(--b);padding:12px}
+.rrow{display:flex;gap:7px;padding:6px 0;border-top:.5px solid var(--b);align-items:flex-start}
+.rrow:first-of-type{border-top:none;padding-top:0}
+.ri{font-size:13px;flex-shrink:0;margin-top:1px}
+.rt{font-size:10px;line-height:1.5}
+.rt strong{font-weight:500;color:var(--ro)}
+.rbtn{margin-top:8px;width:100%;padding:8px;border-radius:9px;background:#fff;border:1px solid var(--ro);color:var(--ro);font-size:11px;font-weight:500;cursor:pointer}
+.tcard{background:#fff;margin:0 12px 12px;border-radius:16px;border:1.5px dashed var(--b);padding:14px;text-align:center}
+.mopt{border:1.5px solid var(--b);border-radius:11px;padding:9px 11px;cursor:pointer;display:flex;align-items:center;gap:9px;margin-bottom:7px}
+.mopt:last-child{margin-bottom:0}
+.mopt.on{border-color:var(--ro);background:var(--rl)}
+.mchk{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--b);flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-left:auto}
+.mchk.on{background:var(--ro);border-color:var(--ro)}
+.mchk.on::after{content:'';display:block;width:3px;height:7px;border:2px solid #fff;border-top:none;border-left:none;transform:rotate(45deg) translate(-1px,-1px)}
+.ptabs{display:flex;background:#fff;border-bottom:.5px solid var(--b);padding:0 14px;gap:4px}
+.ptab{flex:1;padding:8px 4px;font-size:10px;font-weight:500;color:var(--m);text-align:center;cursor:pointer;border-bottom:2px solid transparent}
+.ptab.on{color:var(--ro);border-bottom-color:var(--ro)}
+.ptop3{background:#fff;margin:10px 12px 0;border-radius:16px;border:.5px solid var(--b);padding:14px 10px 12px}
+.p3row{display:flex;align-items:flex-end;justify-content:center;gap:10px;margin-bottom:12px}
+.p3i{display:flex;flex-direction:column;align-items:center;gap:5px}
+.p3i.f{order:2}.p3i.s{order:1}.p3i.t{order:3}
+.pav2{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:500;color:#fff;position:relative}
+.pav2.lg{width:48px;height:48px;font-size:14px}
+.pav2.md{width:40px;height:40px;font-size:12px}
+.avg2{background:var(--go)}.avs{background:var(--m)}.avb{background:#b87333}
+.pcr{position:absolute;top:-9px;font-size:13px}
+.pb3{border-radius:8px 8px 0 0;display:flex;align-items:center;justify-content:center;width:72px}
+.pbg2{background:linear-gradient(180deg,#fef9e7,#faebd0);height:46px}
+.pbs{background:linear-gradient(180deg,#f0f2f5,#e0e5eb);height:34px}
+.pbt{background:linear-gradient(180deg,#faf0eb,#f0e0d5);height:26px}
+.pbn{font-size:14px;font-weight:500}
+.pbn.g{color:var(--go)}.pbn.s{color:var(--m)}.pbn.b{color:#b87333}
+.pname{font-size:10px;font-weight:500;text-align:center;max-width:70px}
+.pgems{font-size:11px;font-weight:500;color:var(--ro)}
+.plist{background:#fff;margin:0 12px 12px;border-radius:16px;border:.5px solid var(--b);overflow:hidden}
+.plr{display:flex;align-items:center;gap:9px;padding:9px 13px;border-top:.5px solid var(--b)}
+.plr:first-child{border-top:none}
+.plr.me{background:var(--rl)}
+.prn{width:18px;font-size:11px;font-weight:500;color:var(--m);text-align:center;flex-shrink:0}
+.prn.top{color:var(--ro)}
+.plav{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:#fff;flex-shrink:0}
+.plar{background:var(--ro)}.plat{background:var(--tu)}.plam{background:var(--m)}
+.plname{font-size:11px;font-weight:500;display:flex;align-items:center;gap:4px}
+.plc{font-size:9px;color:var(--m);margin-top:1px}
+.plbar{height:3px;background:var(--rl);border-radius:3px;margin-top:3px;overflow:hidden}
+.plbf{height:3px;border-radius:3px;background:linear-gradient(90deg,var(--ro),var(--tu))}
+.plg{font-size:11px;font-weight:500;color:var(--ro)}
+.profhero{background:linear-gradient(135deg,var(--rl),var(--tl));padding:20px;text-align:center}
+.profav{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--ro),var(--tu));display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:500;color:#fff;margin:0 auto 10px}
+.profname{font-size:17px;font-weight:500;color:var(--ro);margin-bottom:4px}
+.proftier{display:inline-flex;align-items:center;gap:5px;background:#fff;border-radius:20px;padding:3px 12px;border:.5px solid var(--b)}
+.proftier span{font-size:11px;color:var(--ro);font-weight:500}
+.profcard{background:#fff;margin:10px 12px 0;border-radius:16px;border:.5px solid var(--b);overflow:hidden}
+.profrow{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;border-top:.5px solid var(--b);cursor:pointer}
+.profrow:first-child{border-top:none}
+.prl{display:flex;align-items:center;gap:10px}
+.pri{width:30px;height:30px;border-radius:9px;background:var(--rl);display:flex;align-items:center;justify-content:center}
+.pri svg{width:14px;height:14px;stroke:var(--ro);fill:none;stroke-width:2}
+.prt{font-size:12px;font-weight:500}
+.prs{font-size:10px;color:var(--m);margin-top:1px}
+.pcard{background:#fff;border:.5px solid var(--b);border-radius:12px;padding:11px;display:flex;gap:10px;margin-bottom:8px}
+.pfoto{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--ro),var(--tu));display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:500;color:#fff;flex-shrink:0}
+.pbtn3{background:var(--ro);color:#fff;border:none;border-radius:8px;padding:6px 11px;font-size:11px;font-weight:500;cursor:pointer;margin-top:6px;display:block}
+.sel{width:100%;padding:10px 30px 10px 12px;border-radius:10px;border:1.5px solid var(--b);background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%237a8aaa' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") no-repeat right 10px center;font-size:13px;cursor:pointer;appearance:none;outline:none;display:block;margin-bottom:10px}
+.eopt{background:#fff;border:1.5px solid var(--b);border-radius:10px;padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:9px;margin-bottom:7px}
+.eopt.on{border-color:var(--ro);background:var(--rl)}
+.eck{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--b);flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-left:auto}
+.eck.on{background:var(--ro);border-color:var(--ro)}
+.eck.on::after{content:'';display:block;width:3px;height:7px;border:2px solid #fff;border-top:none;border-left:none;transform:rotate(45deg) translate(-1px,-1px)}
+.ptbl{width:100%;border-radius:10px;overflow:hidden;border:.5px solid var(--b);margin-bottom:8px}
+.pthead{display:grid;grid-template-columns:2fr 1fr 1fr;background:var(--ro)}
+.pthead div{font-size:9px;font-weight:500;color:#fff;padding:7px 8px;letter-spacing:.04em;text-transform:uppercase}
+.ptr{display:grid;grid-template-columns:2fr 1fr 1fr;border-top:.5px solid var(--b);background:#fff}
+.ptr input{border:none;outline:none;font-size:12px;padding:8px;background:transparent;width:100%}
+.addb{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--ro);cursor:pointer;background:none;border:none;font-weight:500;padding:3px 0;margin-bottom:10px}
+.addb svg{width:13px;height:13px;stroke:var(--ro);fill:none;stroke-width:2}
+/* OVERLAY POPUP — fixed ao phone */
+.ovl{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(26,79,173,.25);z-index:50;display:none;align-items:flex-end;overflow:hidden;border-radius:28px}
+.ovl.on{display:flex}
+.pop{background:#fff;border-radius:22px 22px 0 0;padding:0 0 24px;width:100%;max-height:88%;overflow-y:auto;scrollbar-width:none;position:relative;box-shadow:0 -4px 24px rgba(26,79,173,.12)}
+.pop::-webkit-scrollbar{display:none}
+.ph{width:36px;height:4px;background:var(--b);border-radius:2px;margin:12px auto 14px}
+.phd{padding:0 18px 12px;border-bottom:.5px solid var(--b)}
+.pht{font-size:17px;font-weight:500;color:var(--ro);margin-bottom:3px}
+.phs{font-size:12px;color:var(--m)}
+.pvi{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.pvp{background:var(--rl);padding:3px 10px;border-radius:20px;font-size:10px;color:var(--ro);font-weight:500}
+.dests{padding:12px 18px;display:flex;flex-direction:column;gap:8px}
+.dest{border:1.5px solid var(--b);border-radius:13px;padding:12px 13px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:all .15s}
+.dest:hover{border-color:rgba(26,79,173,.3);background:#fafbff}
+.dest.on{border-color:var(--ro);background:var(--rl)}
+.demi{font-size:22px;flex-shrink:0}
+.dname{font-size:13px;font-weight:500}
+.dest.on .dname{color:var(--ro)}
+.ddesc{font-size:10px;color:var(--m);margin-top:2px}
+.dchk{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--b);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-left:auto}
+.dchk.on{background:var(--ro);border-color:var(--ro)}
+.dchk.on::after{content:'';display:block;width:4px;height:9px;border:2px solid #fff;border-top:none;border-left:none;transform:rotate(45deg) translate(-1px,-1px)}
+.altd{border:1.5px dashed rgba(26,79,173,.2);border-radius:13px;padding:11px 13px;cursor:pointer;display:flex;align-items:center;gap:12px}
+.altd:hover{background:#fafbff}
+.altchk{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--b);flex-shrink:0;margin-left:auto}
+.pbtn2{margin:8px 18px 0;background:var(--ro);color:#fff;border:none;border-radius:13px;padding:13px;width:calc(100% - 36px);font-size:13px;font-weight:500;cursor:pointer;display:block}
+.pskip{display:block;text-align:center;margin-top:10px;font-size:11px;color:var(--m);cursor:pointer;padding-bottom:4px}
+.pclose{position:absolute;top:14px;right:16px;font-size:18px;color:var(--m);cursor:pointer;background:none;border:none;line-height:1;z-index:10}
+.conf{padding:40px 18px;text-align:center}
+.ci{font-size:42px;margin-bottom:10px}
+.ctit{font-size:16px;font-weight:500;color:var(--ro);margin-bottom:7px}
+.csub{font-size:12px;color:var(--m);line-height:1.6;margin-bottom:12px}
+.cnote{background:var(--tl);border-radius:10px;padding:10px 12px;font-size:11px;color:#0a7a80;line-height:1.5;margin-bottom:10px}
+.profcard.last{margin:8px 12px 16px}
+</style></head>
+<body>
+<div class="phone">
+<div class="sb"><span>22 Mar 2026</span><span>●●●● WiFi</span><span>18:42</span></div>
+<div id="app">
+
+<!-- SPLASH -->
+<div class="sc on" id="splash">
+  <div style="min-height:620px;background:linear-gradient(135deg,var(--rl),var(--tl));display:flex;flex-direction:column;align-items:center;padding:28px 20px 20px;text-align:center">
+    <div class="L" style="margin-bottom:4px">
+      <svg width="30" height="30" viewBox="0 0 40 40" fill="none"><path d="M38 20A18 18 0 1 1 20 2" stroke="#1a4fad" stroke-width="4.5" stroke-linecap="round"/><path d="M20 2A18 18 0 0 1 38 20" stroke="#0aadb5" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="5 28"/></svg>
+      <span style="font-size:24px">riflamania</span>
+    </div>
+    <div style="font-size:12px;color:var(--m);margin:4px 0 14px">A Comunidade Portuguesa de Beleza Oriflame 💎</div>
+    <div style="width:100%;border-radius:16px;overflow:hidden;margin-bottom:16px">
+      <svg viewBox="0 0 340 150" width="100%">
+        <defs>
+          <linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#bfdbfe"/><stop offset="100%" stop-color="#93c5fd"/></linearGradient>
+          <linearGradient id="se" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0ea5e9"/><stop offset="100%" stop-color="#1e40af"/></linearGradient>
+          <linearGradient id="hu" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#e0e7ff"/></linearGradient>
+          <linearGradient id="ov" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="transparent"/><stop offset="45%" stop-color="transparent"/><stop offset="100%" stop-color="rgba(15,30,80,0.78)"/></linearGradient>
+        </defs>
+        <rect width="340" height="150" fill="url(#sk)"/>
+        <circle cx="278" cy="35" r="20" fill="#fde68a" opacity=".9"/><circle cx="278" cy="35" r="26" fill="#fde68a" opacity=".2"/>
+        <ellipse cx="55" cy="28" rx="28" ry="11" fill="white" opacity=".7"/><ellipse cx="130" cy="18" rx="22" ry="8" fill="white" opacity=".5"/>
+        <rect x="0" y="105" width="340" height="45" fill="url(#se)"/>
+        <path d="M0 107 Q40 103 80 107 Q120 111 160 107 Q200 103 240 107 Q280 111 320 107" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1.5"/>
+        <path d="M88 103 L92 113 Q170 119 248 113 L252 103 Z" fill="#1e40af"/>
+        <path d="M92 103 L248 103 Q244 113 170 117 Q96 113 92 103 Z" fill="#1d4ed8"/>
+        <rect x="90" y="102" width="160" height="3" rx="1" fill="#dc2626"/>
+        <rect x="97" y="86" width="146" height="17" rx="3" fill="url(#hu)"/>
+        <rect x="116" y="70" width="108" height="18" rx="3" fill="white"/>
+        <rect x="131" y="55" width="78" height="17" rx="3" fill="white"/>
+        <rect x="174" y="33" width="11" height="13" rx="2" fill="#1e40af"/>
+        <line x1="179" y1="29" x2="179" y2="18" stroke="#94a3b8" stroke-width="1.5"/>
+        <circle cx="179" cy="17" r="2" fill="#94a3b8"/>
+        <rect width="340" height="150" fill="url(#ov)"/>
+        <text x="170" y="138" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" font-weight="600" fill="white">Compra, Acumula 💎 e Ganha um Cruzeiro!</text>
+      </svg>
+    </div>
+    <button class="btn bp" onclick="showPop('lpop')">Já Tenho Conta · Entrar 💎</button>
+    <button class="btn bo" onclick="go('criar')">Criar Conta</button>
+    <div class="dvd"><div class="dvl"></div><div class="dvt">ou</div><div class="dvl"></div></div>
+    <button class="btn bg2" onclick="go('escolha')">Entrar Como Convidado</button>
+  </div>
+  <!-- LOGIN POPUP -->
+  <div class="ovl" id="lpop">
+    <div class="pop">
+      <button class="pclose" onclick="hidePop('lpop')">✕</button>
+      <div class="ph"></div>
+      <div class="phd"><div class="pht">Entrar na Conta 💎</div><div class="phs">Bem-vinda de volta!</div></div>
+      <div style="padding:14px 18px">
+        <div id="lerr" style="display:none;background:#fef2f2;color:#dc2626;border-radius:10px;padding:9px 12px;font-size:11px;margin-bottom:10px"></div>
+        <label class="fl">Email</label>
+        <input class="fi" type="email" id="le" placeholder="email@exemplo.com"/>
+        <label class="fl">Password</label>
+        <div class="pw-wrap"><input type="password" id="lp" placeholder="A tua password"/><button onclick="olho('lp',this)"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div>
+        <button class="btn bp" onclick="doLogin()">Entrar 💎</button>
+        <div class="tc"><a onclick="hidePop('lpop');go('esq')">Esqueci a Password</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CRIAR CONTA -->
+<div class="sc" id="criar">
+  <div class="sh"><div class="bk" onclick="go('splash')"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div><div class="stit">Criar Conta</div></div>
+  <div class="scr"><div class="w">
+    <div class="ib">💎 Regista-te e começa a ganhar diamantes!</div>
+    <div id="rerr" style="display:none;background:#fef2f2;color:#dc2626;border-radius:10px;padding:9px 12px;font-size:11px;margin-bottom:10px"></div>
+    <label class="fl">Nome</label><input class="fi" id="rn" type="text" placeholder="O teu nome"/>
+    <label class="fl">Email</label><input class="fi" id="re" type="email" placeholder="email@exemplo.com"/>
+    <label class="fl">Telemóvel</label><input class="fi" id="rt" type="tel" placeholder="+351 9XX XXX XXX"/>
+    <label class="fl">Password</label>
+    <div class="pw-wrap"><input type="password" id="rp" placeholder="Escolhe uma password"/><button onclick="olho('rp',this)"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div>
+    <label class="fl">Confirmar Password</label>
+    <div class="pw-wrap"><input type="password" id="rp2" placeholder="Repete a password"/><button onclick="olho('rp2',this)"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div>
+    <button class="btn bp" onclick="doReg()">Criar Conta 💎</button>
+    <div class="tc">Aceitas os <a href="#">Termos & Condições</a> e a <a href="#">Política de Privacidade</a>.</div>
+  </div></div>
+</div>
+
+<!-- ESQUECI PASSWORD -->
+<div class="sc" id="esq">
+  <div class="sh"><div class="bk" onclick="go('splash')"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div><div class="stit">Recuperar Password</div></div>
+  <div class="scr"><div class="w">
+    <div class="ib ibt">Introduz o teu email e mostramos a tua password.</div>
+    <div id="eerr" style="display:none;background:#fef2f2;color:#dc2626;border-radius:10px;padding:9px 12px;font-size:11px;margin-bottom:10px"></div>
+    <div id="eok" style="display:none;background:#f0fdf4;color:#16a34a;border-radius:10px;padding:9px 12px;font-size:11px;margin-bottom:10px"></div>
+    <label class="fl">Email</label><input class="fi" id="ee" type="email" placeholder="email@exemplo.com"/>
+    <button class="btn bp" onclick="doEsq()">Ver a Minha Password →</button>
+    <button class="btn bo" onclick="go('splash')">Voltar</button>
+  </div></div>
+</div>
+
+<!-- CONF CONTA -->
+<div class="sc" id="conf">
+  <div class="scr"><div class="conf">
+    <div class="ci">🎉</div><div class="ctit" id="ct">Bem-vinda!</div>
+    <div class="csub">A tua conta foi criada com sucesso!</div>
+    <div class="cnote">💎 Ganhaste os teus primeiros 20 diamantes!</div>
+    <button class="btn bp" onclick="go('home')">Entrar na App →</button>
+  </div></div>
+</div>
+
+<!-- ESCOLHA CONVIDADO -->
+<div class="sc" id="escolha">
+  <div class="sh"><div class="bk" onclick="go('splash')"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div>
+    <div class="L"><svg width="16" height="16" viewBox="0 0 40 40" fill="none"><path d="M38 20A18 18 0 1 1 20 2" stroke="#1a4fad" stroke-width="4.5" stroke-linecap="round"/><path d="M20 2A18 18 0 0 1 38 20" stroke="#0aadb5" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="5 28"/></svg><span style="font-size:14px">riflamania</span></div>
+  </div>
+  <div class="scr"><div class="w">
+    <div class="slbl">Comprar</div>
+    <div class="opt" onclick="go('loja_pop')"><div class="oi or">🛍️</div><div><div class="ott">Loja Vintage Oriflamania</div><div class="os">Stock exclusivo · entrega imediata</div></div><div class="arr">›</div></div>
+    <div class="opt" onclick="go('catalogo')"><div class="oi ot">📖</div><div><div class="ott">Encomendar Catálogo Oriflame</div><div class="os">Catálogo oficial · ~1 semana</div></div><div class="arr">›</div></div>
+    <div style="display:flex;align-items:center;gap:8px;margin:4px 0 8px"><div class="dvl"></div><div class="dvt">ou</div><div class="dvl"></div></div>
+    <div class="slbl">Comunidade</div>
+    <div class="opt" onclick="go('comunidade')"><div class="oi og">💎</div><div><div class="ott">Tornar-me Membro / Parceira</div><div class="os">Registo oficial com acompanhamento</div></div><div class="arr">›</div></div>
+  </div></div>
+</div>
+
+<!-- LOJA POPUP NOME -->
+<div class="sc" id="loja_pop">
+  <div class="sh"><div class="bk" onclick="go('escolha')"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div><div class="stit">Loja Vintage Oriflamania</div></div>
+  <div class="scr">
+    <div style="min-height:490px;background:linear-gradient(135deg,var(--rl),var(--tl));display:flex;align-items:center;padding:18px">
+      <div style="background:#fff;border-radius:18px;padding:20px 16px 16px;width:100%">
+        <div style="font-size:34px;text-align:center;margin-bottom:10px">🛍️</div>
+        <div style="font-size:17px;font-weight:500;color:var(--ro);text-align:center;margin-bottom:4px">Como te Podemos Chamar?</div>
+        <div style="font-size:11px;color:var(--m);text-align:center;line-height:1.5;margin-bottom:16px">Só precisamos do teu nome e email</div>
+        <label class="fl">Nome</label><input class="fi" type="text" placeholder="O teu nome"/>
+        <label class="fl">Email</label><input class="fi" type="email" placeholder="email@exemplo.com"/>
+        <button class="btn bp" onclick="go('loja_cli')">Entrar na Loja →</button>
+        <div class="tc">Dados não vendidos. <a href="#">Política de Privacidade</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LOJA CLIENTE -->
+<div class="sc" id="loja_cli">
+  <div class="nav"><div style="display:flex;align-items:center;gap:8px"><div class="bk" onclick="go('escolha')"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div><div class="L"><svg width="20" height="20" viewBox="0 0 40 40" fill="none"><path d="M38 20A18 18 0 1 1 20 2" stroke="#1a4fad" stroke-width="4.5" stroke-linecap="round"/><path d="M20 2A18 18 0 0 1 38 20" stroke="#0aadb5" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="5 28"/></svg><span style="font-size:15px">riflamania</span></div></div></div>
+  <div class="scr">
+    <div style="margin:10px 12px 0;background:var(--gl);border-radius:14px;border:1px solid rgba(201,162,39,.25);padding:11px 13px;display:flex;align-items:center;gap:10px">
+      <div style="font-size:22px">💎</div>
+      <div style="flex:1"><div style="font-size:11px;font-weight:500;color:#7a5500">Ganha Diamantes!</div><div style="font-size:10px;color:#a07020;margin-top:2px">Torna-te membro e acumula 💎 em cada compra.</div></div>
+      <div style="font-size:11px;color:var(--ro);font-weight:500;cursor:pointer" onclick="go('comunidade')">Saber →</div>
+    </div>
+    <div class="sech"><div class="sect">Por Coleção</div></div>
+    <div class="chips"><div class="chip on">💎 Novidades</div><div class="chip">Eclat</div><div class="chip">Giordani Gold</div><div class="chip">So Fever</div></div>
+    <div class="g2">
+      <div class="pc" style="min-width:unset"><div class="pi">🌸<span class="pbg">NOVO</span></div><div class="pin"><div class="pn">EDP Elvie</div><div class="pm">Elvie</div><div class="pp">€43</div></div></div>
+      <div class="pc" style="min-width:unset"><div class="pi">🌿<span class="pbg">NOVO</span></div><div class="pin"><div class="pn">Fig Signature</div><div class="pm">Signature</div><div class="pp">€38</div></div></div>
+      <div class="pc" style="min-width:unset"><div class="pi">💫</div><div class="pin"><div class="pn">EDT Eclat Femme</div><div class="pm">Eclat</div><div class="pp">€36</div></div></div>
+      <div class="pc" style="min-width:unset"><div class="pi">✨</div><div class="pin"><div class="pn">Giordani Gold</div><div class="pm">Giordani</div><div class="pp">€52</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CATÁLOGO -->
+<div class="sc" id="catalogo">
+  <div class="sh"><div class="bk" onclick="go('escolha')"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div><div class="stit">Encomendar Catálogo Oriflame</div></div>
+  <div class="scr"><div class="w">
+    <div class="ib ibt">📖 Catálogo oficial. Prazo ~1 semana. Levantamento em Setúbal ou envio.</div>
+    <label class="fl">Como Queres Receber?</label>
+    <div class="eopt on" id="e0" onclick="selE(0)"><div style="font-size:18px">📍</div><div><div style="font-size:12px;font-weight:500">Levantamento em Setúbal</div><div style="font-size:10px;color:var(--m)">Presencial · por marcação · gratuito</div></div><div class="eck on" id="ec0"></div></div>
+    <div class="eopt" id="e1" onclick="selE(1)"><div style="font-size:18px">📦</div><div><div style="font-size:12px;font-weight:500">Envio por Correio</div><div style="font-size:10px;color:var(--m)">Portes a cargo do cliente</div></div><div class="eck" id="ec1"></div></div>
+    <label class="fl" style="margin-top:8px">Produtos a Encomendar</label>
+    <div class="ptbl">
+      <div class="pthead"><div>Nome do Produto</div><div>Código</div><div>Preço</div></div>
+      <div class="ptr"><input placeholder="Nome..."/><input placeholder="Cód."/><input placeholder="€"/></div>
+      <div id="extrar"></div>
+    </div>
+    <button class="addb" onclick="addR()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Adicionar produto</button>
+    <label class="fl">Nome</label><input class="fi" placeholder="Nome completo"/>
+    <label class="fl">Telemóvel / Email</label><input class="fi" placeholder="Para te contactarmos"/>
+    <button class="btn bp">Enviar Encomenda →</button>
+  </div></div>
+</div>
+
+<!-- COMUNIDADE -->
+<div class="sc" id="comunidade">
+  <div class="sh"><div class="bk" onclick="go('escolha')"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div><div class="stit">Juntar-me à Comunidade</div></div>
+  <div class="scr"><div class="w">
+    <div class="ib ibg">💎 O registo oficial é feito no site Oriflame através do link da tua parceira.</div>
+    <div class="opt" onclick="go('distrito')"><div class="oi or">🗺️</div><div><div class="ott">Escolher por Distrito</div><div class="os">Encontra uma parceira perto de ti</div></div><div class="arr">›</div></div>
+    <div class="opt"><div class="oi ot">🔑</div><div><div class="ott">Tenho Código de Convite</div></div><div class="arr">›</div></div>
+    <div class="opt"><div class="oi og">✨</div><div><div class="ott">Registo Directo</div><div class="os">A Veronica atribuirá a melhor parceira</div></div><div class="arr">›</div></div>
+  </div></div>
+</div>
+
+<!-- DISTRITO -->
+<div class="sc" id="distrito">
+  <div class="sh"><div class="bk" onclick="go('comunidade')"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div><div class="stit">Escolher por Distrito</div></div>
+  <div class="scr"><div class="w">
+    <label class="fl">Seleciona o teu Distrito</label>
+    <select class="sel" onchange="if(this.value) go('parceiras')">
+      <option value="">— Escolhe o teu distrito —</option>
+      <optgroup label="Norte"><option>Viana do Castelo</option><option>Braga</option><option>Porto</option></optgroup>
+      <optgroup label="Centro"><option>Aveiro</option><option>Coimbra</option><option>Leiria</option></optgroup>
+      <optgroup label="Lisboa e Vale do Tejo"><option>Lisboa</option><option>Santarém</option><option>Setúbal</option></optgroup>
+      <optgroup label="Alentejo/Algarve"><option>Évora</option><option>Faro</option></optgroup>
+      <optgroup label="Ilhas"><option>Madeira</option><option>Açores</option></optgroup>
+    </select>
+    <button class="btn bp" onclick="go('parceiras')">Ver Parceiras →</button>
+  </div></div>
+</div>
+
+<!-- PARCEIRAS -->
+<div class="sc" id="parceiras">
+  <div class="sh"><div class="bk" onclick="go('distrito')"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div><div class="stit">Parceiras em Lisboa</div></div>
+  <div class="scr"><div class="w">
+    <div class="pcard"><div class="pfoto">AP</div><div><div style="font-size:12px;font-weight:500">Ana Paula S.</div><div style="font-size:10px;color:var(--m)">📍 Cascais, Lisboa</div><div style="font-size:10px;color:#666;margin-top:3px">Consultora há 8 anos. 💎</div><button class="pbtn3">Registar com Ana Paula →</button></div></div>
+    <div class="pcard"><div class="pfoto">MJ</div><div><div style="font-size:12px;font-weight:500">Maria João F.</div><div style="font-size:10px;color:var(--m)">📍 Sintra, Lisboa</div><div style="font-size:10px;color:#666;margin-top:3px">Mãe, consultora e líder. 🌟</div><button class="pbtn3">Registar com Maria João →</button></div></div>
+  </div></div>
+</div>
+
+<!-- ════ APP COM CONTA ════ -->
+
+<!-- HOME -->
+<div class="sc" id="home">
+  <div class="nav">
+    <div class="L"><svg width="20" height="20" viewBox="0 0 40 40" fill="none"><path d="M38 20A18 18 0 1 1 20 2" stroke="#1a4fad" stroke-width="4.5" stroke-linecap="round"/><path d="M20 2A18 18 0 0 1 38 20" stroke="#0aadb5" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="5 28"/></svg><span style="font-size:15px">riflamania</span></div>
+    <div class="ni"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg></div>
+  </div>
+  <div class="scr">
+    <div style="background:#fff;padding:11px 14px;border-bottom:.5px solid var(--b);display:flex;align-items:center;justify-content:space-between;gap:9px">
+      <div>
+        <div style="font-size:11px;color:var(--m);margin-bottom:2px">Bom Dia 👋</div>
+        <div style="font-size:15px;font-weight:500;color:var(--ro)" id="hn">—</div>
+        <div style="display:inline-flex;align-items:center;gap:4px;background:var(--rl);padding:2px 9px;border-radius:20px;margin-top:4px"><span style="font-size:10px;color:var(--ro);font-weight:500" id="ht">🌱 Starter</span></div>
+      </div>
+      <div class="pod">
+        <div class="pod-t">🏆 Pódio</div>
+        <div class="pod-r"><span>🔥 Sara R.</span><em>2.100💎</em></div>
+        <div class="pod-r"><span>💎 Ana M.</span><em>1.840💎</em></div>
+        <div class="pod-r"><span>🔥 João C.</span><em>1.650💎</em></div>
+        <div class="pod-v" onclick="go('podio')">Ver Tudo →</div>
+      </div>
+    </div>
+    <div class="camp">
+      <div class="cpill">⚡ EXTREME VIP 2026 · 275 Dias</div>
+      <div class="csts">
+        <div class="cs"><div class="csv">20💎</div><div class="csl">🚢 Cruzeiro</div></div>
+        <div class="cs"><div class="csv t">6💎</div><div class="csl">💰 Cashback</div></div>
+        <div class="cs"><div class="csv g">8💎</div><div class="csl">🎁 Voucher</div></div>
+      </div>
+      <div class="bbar"><div class="bfil" style="width:1%"></div></div>
+      <div class="cft"><span style="font-size:10px;color:var(--m)">🚢 20 / 2.000💎</span><div class="crhy"><span>Bónus instalação 🎉</span></div></div>
+      <button class="cbtn2" onclick="go('cruzeiro')">📋 Regulamento EXTREME VIP 2026 →</button>
+    </div>
+    <!-- INDICADOR ROLLING CATÁLOGOS -->
+    <div style="background:#fff;margin:8px 12px 0;border-radius:14px;border:.5px solid var(--b);padding:11px 13px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px">
+        <div style="font-size:11px;font-weight:500;color:var(--ro)">📋 Catálogos Oriflame — Elegibilidade</div>
+        <div style="font-size:10px;color:var(--m)">Rolling 3 catálogos</div>
+      </div>
+      <div style="display:flex;gap:6px;margin-bottom:7px">
+        <div style="flex:1;text-align:center">
+          <div style="background:var(--rl);border-radius:8px;padding:6px 4px;border:1px solid rgba(26,79,173,.15)">
+            <div style="font-size:9px;color:var(--m);margin-bottom:3px">Cat. 04/2026</div>
+            <div style="font-size:11px;font-weight:500;color:#16a34a">✅ 0VP</div>
+          </div>
+        </div>
+        <div style="flex:1;text-align:center">
+          <div style="background:#f4f7fc;border-radius:8px;padding:6px 4px;border:1px dashed rgba(26,79,173,.2)">
+            <div style="font-size:9px;color:var(--m);margin-bottom:3px">Cat. 05/2026</div>
+            <div style="font-size:11px;font-weight:500;color:var(--m)">— VP</div>
+          </div>
+        </div>
+        <div style="flex:1;text-align:center">
+          <div style="background:#f4f7fc;border-radius:8px;padding:6px 4px;border:1px dashed rgba(26,79,173,.2)">
+            <div style="font-size:9px;color:var(--m);margin-bottom:3px">Cat. 06/2026</div>
+            <div style="font-size:11px;font-weight:500;color:var(--m)">— VP</div>
+          </div>
+        </div>
+      </div>
+      <div style="background:rgba(26,79,173,.08);border-radius:5px;height:5px;overflow:hidden;margin-bottom:4px">
+        <div style="height:5px;border-radius:5px;background:linear-gradient(90deg,#16a34a,var(--tu));width:33%"></div>
+      </div>
+      <div style="font-size:10px;color:var(--m)">⚠️ Precisas de 15VP em <strong style="color:var(--ro)">2 dos 3</strong> catálogos para manter elegibilidade</div>
+    </div>
+
+    <div class="nudge">
+      <div style="font-size:18px">🔔</div>
+      <div style="flex:1"><div style="font-size:11px;font-weight:500;color:#7a5500">Ganha +20💎 Agora!</div><div style="font-size:10px;color:#a07020;margin-top:1px">Ativa as notificações!</div></div>
+      <button class="nbt">Ativar</button>
+    </div>
+    <div class="sech"><div class="sect">✨ Novidades na Loja</div><div class="secl" onclick="go('loja')">Ver Todas →</div></div>
+    <div class="hs">
+      <div class="pc"><div class="pi">🌸<span class="pbg">NOVO</span></div><div class="pin"><div class="pn">EDP Elvie</div><div class="pm">Elvie</div><div class="pp">€43</div></div></div>
+      <div class="pc"><div class="pi">🌿<span class="pbg">NOVO</span></div><div class="pin"><div class="pn">Fig Signature</div><div class="pm">Signature</div><div class="pp">€38</div></div></div>
+      <div class="pc"><div class="pi">🔥<span class="pbg">NOVO</span></div><div class="pin"><div class="pn">SE Blazing</div><div class="pm">Special Ed.</div><div class="pp">€41</div></div></div>
+      <div class="pc"><div class="pi">💼<span class="pbg">NOVO</span></div><div class="pin"><div class="pn">Bolsa Marina</div><div class="pm">Marina</div><div class="pp">€45</div></div></div>
+    </div>
+    <div class="sech"><div class="sect">💛 Destaques — Eclat</div><div class="secl" onclick="go('loja')">Ver Gama →</div></div>
+    <div class="hs">
+      <div class="pc"><div class="pi" style="background:linear-gradient(135deg,#fef9e7,#faebd0)">💫<span class="pdbg">Eclat</span></div><div class="pin"><div class="pn">EDT Eclat Femme</div><div class="pm">Para Ela</div><div class="pp">€36</div></div></div>
+      <div class="pc"><div class="pi" style="background:linear-gradient(135deg,#fef9e7,#faebd0)">✨<span class="pdbg">Eclat</span></div><div class="pin"><div class="pn">EDT Eclat Homme</div><div class="pm">Para Ele</div><div class="pp">€36</div></div></div>
+    </div>
+    <div style="padding:10px 14px 20px;text-align:center">
+      <button onclick="sair()" style="background:none;border:none;color:var(--m);font-size:11px;cursor:pointer;text-decoration:underline">Terminar Sessão</button>
+    </div>
+  </div>
+  <div class="bn">
+    <div class="bni on" onclick="go('home')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Início</span></div>
+    <div class="bni" onclick="go('loja')"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg><span>Loja</span></div>
+    <div class="bni" onclick="go('diamantes')"><svg viewBox="0 0 24 24" fill="none"><polygon points="12,2 22,8 22,16 12,22 2,16 2,8" stroke="#7a8aaa" stroke-width="1.5"/></svg><span>Diamantes</span></div>
+    <div class="bni" onclick="go('cruzeiro')"><svg viewBox="0 0 24 24"><path d="M3 17l4-8 4 4 4-6 4 10"/><circle cx="12" cy="5" r="2"/></svg><span>Cruzeiro</span></div>
+    <div class="bni" onclick="go('perfil')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Perfil</span></div>
+  </div>
+</div>
+
+<!-- LOJA MEMBRO -->
+<div class="sc" id="loja">
+  <div class="nav"><div style="display:flex;align-items:center;gap:8px"><div class="bk" onclick="go('home')"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div><div class="L"><svg width="20" height="20" viewBox="0 0 40 40" fill="none"><path d="M38 20A18 18 0 1 1 20 2" stroke="#1a4fad" stroke-width="4.5" stroke-linecap="round"/><path d="M20 2A18 18 0 0 1 38 20" stroke="#0aadb5" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="5 28"/></svg><span style="font-size:15px">riflamania</span></div></div><div class="ni"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg></div></div>
+  <div class="scr">
+    <div class="chips" style="padding-top:10px"><div class="chip on">💎 Novidades</div><div class="chip">Eclat</div><div class="chip">Giordani Gold</div><div class="chip">So Fever</div><div class="chip">Divine</div></div>
+    <div class="g2">
+      <div class="pc" style="min-width:unset"><div class="pi">🌸<span class="pbg">NOVO</span></div><div class="pin"><div class="pn">EDP Elvie</div><div class="pm">Elvie</div><div class="pp">€43</div></div></div>
+      <div class="pc" style="min-width:unset"><div class="pi">🌿<span class="pbg">NOVO</span></div><div class="pin"><div class="pn">Fig Signature</div><div class="pm">Signature</div><div class="pp">€38</div></div></div>
+      <div class="pc" style="min-width:unset"><div class="pi">💫</div><div class="pin"><div class="pn">EDT Eclat Femme</div><div class="pm">Eclat</div><div class="pp">€36</div></div></div>
+      <div class="pc" style="min-width:unset"><div class="pi">✨</div><div class="pin"><div class="pn">Giordani Gold</div><div class="pm">Giordani</div><div class="pp">€52</div></div></div>
+      <div class="pc" style="min-width:unset"><div class="pi">🔥</div><div class="pin"><div class="pn">SE Blazing</div><div class="pm">Special Ed.</div><div class="pp">€41</div></div></div>
+      <div class="pc" style="min-width:unset"><div class="pi">💼</div><div class="pin"><div class="pn">Bolsa Marina</div><div class="pm">Marina</div><div class="pp">€45</div></div></div>
+    </div>
+  </div>
+  <div class="bn">
+    <div class="bni" onclick="go('home')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Início</span></div>
+    <div class="bni on"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg><span>Loja</span></div>
+    <div class="bni" onclick="go('diamantes')"><svg viewBox="0 0 24 24" fill="none"><polygon points="12,2 22,8 22,16 12,22 2,16 2,8" stroke="#7a8aaa" stroke-width="1.5"/></svg><span>Diamantes</span></div>
+    <div class="bni" onclick="go('cruzeiro')"><svg viewBox="0 0 24 24"><path d="M3 17l4-8 4 4 4-6 4 10"/><circle cx="12" cy="5" r="2"/></svg><span>Cruzeiro</span></div>
+    <div class="bni" onclick="go('perfil')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Perfil</span></div>
+  </div>
+</div>
+
+<!-- DIAMANTES -->
+<div class="sc" id="diamantes">
+  <div class="nav"><div style="display:flex;align-items:center;gap:8px"><div class="bk" onclick="go('home')"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div><div class="L"><svg width="20" height="20" viewBox="0 0 40 40" fill="none"><path d="M38 20A18 18 0 1 1 20 2" stroke="#1a4fad" stroke-width="4.5" stroke-linecap="round"/><path d="M20 2A18 18 0 0 1 38 20" stroke="#0aadb5" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="5 28"/></svg><span style="font-size:15px">riflamania</span></div></div></div>
+  <div class="scr">
+    <div class="dh">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <div><div style="font-size:10px;color:var(--m);margin-bottom:1px">Os Teus Diamantes 💎</div><div class="dtot">20 💎</div><div class="dsub">1💎 = €1 · campanha até 20 Dez 2026</div></div>
+        <svg viewBox="0 0 56 56" fill="none" width="32" height="32"><polygon points="28,4 50,16 50,40 28,52 6,40 6,16" fill="#1a4fad" opacity=".12" stroke="#1a4fad" stroke-width="2"/><polygon points="28,12 42,21 42,35 28,44 14,35 14,21" fill="#0aadb5" opacity=".25"/></svg>
+      </div>
+      <div class="bbar"><div class="bfil" style="width:1%"></div></div>
+      <div style="display:flex;justify-content:space-between;margin-top:4px"><span style="font-size:10px;color:var(--m)">🚢 faltam 1.980💎</span><span style="font-size:10px;color:var(--tu);font-weight:500">1%</span></div>
+    </div>
+    <div class="sech"><div class="sect">Equivalências</div></div>
+    <div class="deq">
+      <div class="deqc"><div class="deqv">20💎</div><div class="deql">🚢 Cruzeiro</div></div>
+      <div class="deqc"><div class="deqv t">6💎</div><div class="deql">💰 Cashback</div></div>
+      <div class="deqc"><div class="deqv g">8💎</div><div class="deql">🎁 Voucher</div></div>
+    </div>
+    <div class="sech"><div class="sect">Como Ganhar 💎</div></div>
+    <!-- Loja Vintage -->
+    <div style="padding:0 12px 4px;font-size:10px;font-weight:500;color:var(--m);letter-spacing:.05em;text-transform:uppercase">🛍️ Loja Vintage — por cada 100€</div>
+    <div class="tier-wrap">
+      <div class="tier-head" style="grid-template-columns:1.3fr 1fr 1fr 1fr"><div>Tier</div><div>🚢 Cruzeiro</div><div>💰 Cashback</div><div>🎁 Voucher</div></div>
+      <div class="tier-row me" style="grid-template-columns:1.3fr 1fr 1fr 1fr"><div>🔥 Phoenix</div><div><span class="tv">50💎</span></div><div><span style="color:#e05c00;font-weight:500">30💎</span></div><div><span style="color:var(--go);font-weight:500">40💎</span></div></div>
+      <div class="tier-row" style="grid-template-columns:1.3fr 1fr 1fr 1fr"><div>💎 Oriflam.</div><div><span class="tv">35💎</span></div><div><span style="color:#e05c00;font-weight:500">20💎</span></div><div><span style="color:var(--go);font-weight:500">30💎</span></div></div>
+      <div class="tier-row" style="grid-template-columns:1.3fr 1fr 1fr 1fr"><div>🪐 Orbital</div><div><span class="tv">20💎</span></div><div><span style="color:#e05c00;font-weight:500">10💎</span></div><div><span style="color:var(--go);font-weight:500">20💎</span></div></div>
+      <div class="tier-row" style="grid-template-columns:1.3fr 1fr 1fr 1fr"><div>⏸️ Desc.</div><div><span class="tv">20💎</span></div><div><span style="color:#e05c00;font-weight:500">10💎</span></div><div><span style="color:var(--go);font-weight:500">20💎</span></div></div>
+    </div>
+    <!-- Site Oriflame -->
+    <div style="padding:8px 12px 4px;font-size:10px;font-weight:500;color:var(--m);letter-spacing:.05em;text-transform:uppercase">🌐 Site Oriflame — por cada 100VP</div>
+    <div class="tier-wrap">
+      <div class="tier-head" style="grid-template-columns:1.3fr 1fr 1fr 1fr"><div>Tier</div><div>🚢 Cruzeiro</div><div>💰 Cashback</div><div>🎁 Voucher</div></div>
+      <div class="tier-row me" style="grid-template-columns:1.3fr 1fr 1fr 1fr"><div>🔥 Phoenix</div><div><span class="tvp">5💎</span></div><div><span style="color:#e05c00;font-weight:500">2💎</span></div><div><span style="color:var(--go);font-weight:500">3💎</span></div></div>
+      <div class="tier-row" style="grid-template-columns:1.3fr 1fr 1fr 1fr"><div>💎 Oriflam.</div><div><span class="tvp">3💎</span></div><div><span style="color:#e05c00;font-weight:500">1💎</span></div><div><span style="color:var(--go);font-weight:500">2💎</span></div></div>
+      <div class="tier-row" style="grid-template-columns:1.3fr 1fr 1fr 1fr"><div>🪐 Orbital</div><div><span class="tvp">2💎</span></div><div><span style="color:#e05c00;font-weight:500">1💎</span></div><div><span style="color:var(--go);font-weight:500">1💎</span></div></div>
+      <div class="tier-row" style="grid-template-columns:1.3fr 1fr 1fr 1fr"><div>⏸️ Desc.</div><div><span class="tno">—</span></div><div><span class="tno">—</span></div><div><span class="tno">—</span></div></div>
+      <div class="tier-note">💡 VP = Volume de Pontos (site Oriflame). Atribuídos automaticamente no fecho de cada catálogo. Os 💎 são usados no final da campanha à tua escolha: Cruzeiro, Cashback ou Voucher.</div>
+    </div>
+    <div class="sech"><div class="sect">Histórico</div></div>
+    <div class="hist">
+      <div class="hr"><div class="hia hia2"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/></svg></div><div style="flex:1"><div class="hn2">App Instalada</div><div class="hd">Bónus de boas-vindas</div></div><div class="hg">+20💎</div></div>
+    </div>
+  </div>
+  <div class="bn">
+    <div class="bni" onclick="go('home')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Início</span></div>
+    <div class="bni" onclick="go('loja')"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg><span>Loja</span></div>
+    <div class="bni on"><svg viewBox="0 0 24 24" fill="none"><polygon points="12,2 22,8 22,16 12,22 2,16 2,8" stroke="#1a4fad" stroke-width="1.5"/><polygon points="12,6 18,10 18,14 12,18 6,14 6,10" fill="#1a4fad" opacity=".3" stroke="none"/></svg><span>Diamantes</span></div>
+    <div class="bni" onclick="go('cruzeiro')"><svg viewBox="0 0 24 24"><path d="M3 17l4-8 4 4 4-6 4 10"/><circle cx="12" cy="5" r="2"/></svg><span>Cruzeiro</span></div>
+    <div class="bni" onclick="go('perfil')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Perfil</span></div>
+  </div>
+</div>
+
+<!-- CRUZEIRO -->
+<div class="sc" id="cruzeiro">
+  <div class="nav"><div style="display:flex;align-items:center;gap:8px"><div class="bk" onclick="go('home')"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div><div class="L"><svg width="20" height="20" viewBox="0 0 40 40" fill="none"><path d="M38 20A18 18 0 1 1 20 2" stroke="#1a4fad" stroke-width="4.5" stroke-linecap="round"/><path d="M20 2A18 18 0 0 1 38 20" stroke="#0aadb5" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="5 28"/></svg><span style="font-size:15px">riflamania</span></div></div></div>
+  <div class="scr">
+    <div class="cruh">
+      <div class="cht"><div style="font-size:36px;margin-bottom:5px">🚢</div><div class="cht2">Cruzeiro 2027</div><div class="chs">Viagem de Equipa · após Natal 2026</div><div class="chd"><span>🗳️ Votação em Curso</span></div></div>
+      <div class="chb"><div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:10px;color:var(--m)">Equipa a Bordo</span><strong style="font-size:10px;color:var(--ro)">8 / 42 🔥</strong></div><div class="bbar"><div class="bfil" style="width:19%"></div></div></div>
+    </div>
+    <div class="sech"><div class="sect">🗺️ Destino</div><div class="secl" onclick="abrirVoto()">Votar →</div></div>
+    <div class="vc">
+      <div class="vrow"><div class="vlbl">🏛️ Ilhas Gregas</div><div class="vbb"><div class="vbf" style="width:68%"></div></div><div class="vpct">68%</div></div>
+      <div class="vrow"><div class="vlbl">⛵ Mediterrâneo</div><div class="vbb"><div class="vbf" style="width:22%"></div></div><div class="vpct">22%</div></div>
+      <div class="vrow"><div class="vlbl">🌴 Ilhas Canárias</div><div class="vbb"><div class="vbf" style="width:10%"></div></div><div class="vpct">10%</div></div>
+      <div class="mv"><span>O Teu Voto</span><strong>🏛️ Ilhas Gregas</strong><span class="mvl" onclick="abrirVoto()">Alterar →</span></div>
+    </div>
+    <div class="sech"><div class="sect">📅 Mês de Preferência</div><div class="secl" onclick="abrirMes()">Votar →</div></div>
+    <div class="vc">
+      <div class="vrow"><div class="vlbl">🐣 Páscoa 2027</div><div class="vbb"><div class="vbf" style="width:55%"></div></div><div class="vpct">55%</div></div>
+      <div class="vrow"><div class="vlbl">☀️ Jul / Ago 2027</div><div class="vbb"><div class="vbf" style="width:30%"></div></div><div class="vpct">30%</div></div>
+      <div class="vrow"><div class="vlbl">📅 Indiferente</div><div class="vbb"><div class="vbf" style="width:15%"></div></div><div class="vpct">15%</div></div>
+      <div class="mv"><span>O Teu Voto</span><strong>🐣 Páscoa 2027</strong><span class="mvl" onclick="abrirMes()">Alterar →</span></div>
+    </div>
+    <div class="sech"><div class="sect">📋 Critérios</div></div>
+    <div class="rc">
+      <div class="rrow"><div class="ri">💎</div><div class="rt"><strong>Meta:</strong> 2.000💎 até 20 Dez 2026 = 1 viagem garantida</div></div>
+      <div class="rrow"><div class="ri">📅</div><div class="rt"><strong>Época alta</strong> usa mais 💎 — sobram menos para cashback/voucher</div></div>
+      <button class="rbtn">📋 Regulamento Completo →</button>
+    </div>
+    <div class="sech"><div class="sect">🎥 Tour Virtual</div></div>
+    <div class="tcard"><div style="font-size:28px;margin-bottom:6px">🗺️</div><div style="font-size:12px;font-weight:500;color:var(--m)">Disponível Após Escolha do Destino</div></div>
+  </div>
+  <div class="bn">
+    <div class="bni" onclick="go('home')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Início</span></div>
+    <div class="bni" onclick="go('loja')"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg><span>Loja</span></div>
+    <div class="bni" onclick="go('diamantes')"><svg viewBox="0 0 24 24" fill="none"><polygon points="12,2 22,8 22,16 12,22 2,16 2,8" stroke="#7a8aaa" stroke-width="1.5"/></svg><span>Diamantes</span></div>
+    <div class="bni on"><svg viewBox="0 0 24 24"><path d="M3 17l4-8 4 4 4-6 4 10"/><circle cx="12" cy="5" r="2"/></svg><span>Cruzeiro</span></div>
+    <div class="bni" onclick="go('perfil')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Perfil</span></div>
+  </div>
+</div>
+
+<!-- PÓDIO -->
+<div class="sc" id="podio">
+  <div class="nav"><div style="display:flex;align-items:center;gap:8px"><div class="bk" onclick="go('home')"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div><div class="L"><svg width="20" height="20" viewBox="0 0 40 40" fill="none"><path d="M38 20A18 18 0 1 1 20 2" stroke="#1a4fad" stroke-width="4.5" stroke-linecap="round"/><path d="M20 2A18 18 0 0 1 38 20" stroke="#0aadb5" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="5 28"/></svg><span style="font-size:15px">riflamania</span></div></div></div>
+  <div class="ptabs"><div class="ptab on">🌍 Geral</div><div class="ptab">🔥 Phoenix</div><div class="ptab">💎 Oriflamania</div><div class="ptab">🪐 Orbital</div></div>
+  <div class="scr">
+    <div class="ptop3">
+      <div class="p3row">
+        <div class="p3i s"><div class="pav2 md avs">AM</div><div style="font-size:9px">💎</div><div class="pname">Ana M.</div><div class="pgems">1.840💎</div><div class="pb3 pbs"><span class="pbn s">2</span></div></div>
+        <div class="p3i f"><div class="pav2 lg avg2">SR<span class="pcr">👑</span></div><div style="font-size:9px">🔥</div><div class="pname">Sara R.</div><div class="pgems">2.100💎</div><div class="pb3 pbg2"><span class="pbn g">1</span></div></div>
+        <div class="p3i t"><div class="pav2 md avb">JC</div><div style="font-size:9px">🔥</div><div class="pname">João C.</div><div class="pgems">1.650💎</div><div class="pb3 pbt"><span class="pbn b">3</span></div></div>
+      </div>
+    </div>
+    <div class="sech"><div class="sect">Top 10</div></div>
+    <div class="plist">
+      <div class="plr"><div class="prn top">4</div><div class="plav plar">MF</div><div style="flex:1"><div class="plname">Maria F. 🔥</div><div class="plc">🇵🇹 Portugal</div><div class="plbar"><div class="plbf" style="width:75%"></div></div></div><div class="plg">1.500💎</div></div>
+      <div class="plr"><div class="prn top">5</div><div class="plav plar">PS</div><div style="flex:1"><div class="plname">Paula S. 💎</div><div class="plc">🇬🇧 UK</div><div class="plbar"><div class="plbf" style="width:55%"></div></div></div><div class="plg">1.100💎</div></div>
+      <div class="plr"><div class="prn top">6</div><div class="plav plam">LC</div><div style="flex:1"><div class="plname">Luísa C. 💎</div><div class="plc">🇪🇸 Espanha</div><div class="plbar"><div class="plbf" style="width:48%"></div></div></div><div class="plg">960💎</div></div>
+      <div class="plr"><div class="prn">7</div><div class="plav plam">RP</div><div style="flex:1"><div class="plname">Rita P. 🪐</div><div class="plc">🇫🇷 França</div><div class="plbar"><div class="plbf" style="width:38%"></div></div></div><div class="plg">760💎</div></div>
+      <div class="plr me"><div class="prn">8</div><div class="plav plat" id="pod_av">—</div><div style="flex:1"><div class="plname" id="pod_nome">— <span style="font-size:9px;color:var(--tu)">• Tu</span></div><div class="plc">🇵🇹 Portugal</div><div class="plbar"><div class="plbf" style="width:1%"></div></div></div><div class="plg">20💎</div></div>
+    </div>
+  </div>
+  <div class="bn">
+    <div class="bni" onclick="go('home')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Início</span></div>
+    <div class="bni" onclick="go('loja')"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg><span>Loja</span></div>
+    <div class="bni" onclick="go('diamantes')"><svg viewBox="0 0 24 24" fill="none"><polygon points="12,2 22,8 22,16 12,22 2,16 2,8" stroke="#7a8aaa" stroke-width="1.5"/></svg><span>Diamantes</span></div>
+    <div class="bni" onclick="go('cruzeiro')"><svg viewBox="0 0 24 24"><path d="M3 17l4-8 4 4 4-6 4 10"/><circle cx="12" cy="5" r="2"/></svg><span>Cruzeiro</span></div>
+    <div class="bni" onclick="go('perfil')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Perfil</span></div>
+  </div>
+</div>
+
+<!-- PERFIL -->
+<div class="sc" id="perfil">
+  <div class="nav"><div style="display:flex;align-items:center;gap:8px"><div class="bk" onclick="go('home')"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div><div class="L"><svg width="20" height="20" viewBox="0 0 40 40" fill="none"><path d="M38 20A18 18 0 1 1 20 2" stroke="#1a4fad" stroke-width="4.5" stroke-linecap="round"/><path d="M20 2A18 18 0 0 1 38 20" stroke="#0aadb5" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="5 28"/></svg><span style="font-size:15px">riflamania</span></div></div></div>
+  <div class="scr">
+    <div class="profhero">
+      <div class="profav" id="pav_ini">—</div>
+      <div class="profname" id="pav_nome">—</div>
+      <div class="proftier"><span id="pav_tier">🌱 Starter</span></div>
+    </div>
+    <div class="profcard">
+      <div class="profrow" onclick="go('diamantes')"><div class="prl"><div class="pri"><svg viewBox="0 0 24 24"><polygon points="12,2 22,8 22,16 12,22 2,16 2,8" fill="none" stroke="#1a4fad" stroke-width="1.5"/></svg></div><div><div class="prt">Diamantes & Campanha</div><div class="prs">20💎 acumulados</div></div></div><div style="font-size:14px;color:var(--m)">›</div></div>
+      <div class="profrow" onclick="go('loja')"><div class="prl"><div class="pri"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg></div><div><div class="prt">Loja Vintage</div></div></div><div style="font-size:14px;color:var(--m)">›</div></div>
+      <div class="profrow" onclick="go('podio')"><div class="prl"><div class="pri"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div><div class="prt">Pódio da Equipa</div></div></div><div style="font-size:14px;color:var(--m)">›</div></div>
+      <div class="profrow" onclick="go('cruzeiro')"><div class="prl"><div class="pri"><svg viewBox="0 0 24 24"><path d="M3 17l4-8 4 4 4-6 4 10"/><circle cx="12" cy="5" r="2"/></svg></div><div><div class="prt">Cruzeiro 2027</div></div></div><div style="font-size:14px;color:var(--m)">›</div></div>
+    </div>
+    <div class="profcard" style="margin-top:8px">
+      <div class="profrow"><div class="prl"><div class="pri"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg></div><div><div class="prt">Notificações</div></div></div><div style="font-size:14px;color:var(--m)">›</div></div>
+      <div class="profrow"><div class="prl"><div class="pri"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="prt">Dados Pessoais</div></div></div><div style="font-size:14px;color:var(--m)">›</div></div>
+      <div class="profrow"><div class="prl"><div class="pri"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div><div><div class="prt">Password</div></div></div><div style="font-size:14px;color:var(--m)">›</div></div>
+    </div>
+    <div class="profcard last">
+      <div class="profrow"><div class="prl"><div class="pri"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><div class="prt">Termos & Privacidade</div></div></div><div style="font-size:14px;color:var(--m)">›</div></div>
+      <div class="profrow" onclick="sair()"><div class="prl"><div class="pri" style="background:#fef2f2"><svg viewBox="0 0 24 24" stroke="#dc2626"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></div><div><div class="prt" style="color:#dc2626">Terminar Sessão</div></div></div></div>
+    </div>
+  </div>
+  <div class="bn">
+    <div class="bni" onclick="go('home')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Início</span></div>
+    <div class="bni" onclick="go('loja')"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg><span>Loja</span></div>
+    <div class="bni" onclick="go('diamantes')"><svg viewBox="0 0 24 24" fill="none"><polygon points="12,2 22,8 22,16 12,22 2,16 2,8" stroke="#7a8aaa" stroke-width="1.5"/></svg><span>Diamantes</span></div>
+    <div class="bni" onclick="go('cruzeiro')"><svg viewBox="0 0 24 24"><path d="M3 17l4-8 4 4 4-6 4 10"/><circle cx="12" cy="5" r="2"/></svg><span>Cruzeiro</span></div>
+    <div class="bni on"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Perfil</span></div>
+  </div>
+</div>
+
+<!-- POPUP VOTAÇÃO MÊS -->
+<div class="ovl" id="mpop" style="z-index:100">
+  <div class="pop">
+    <button class="pclose" onclick="fecharMes()">✕</button>
+    <div class="ph"></div>
+    <div class="phd">
+      <div class="pht">📅 Quando Queres Viajar?</div>
+      <div class="phs">Escolhe a tua preferência de época.</div>
+      <div class="pvi"><div class="pvp">🔥 3 votos</div><div class="pvp">💎 2 votos</div><div class="pvp">🪐 1 voto</div></div>
+    </div>
+    <div class="dests">
+      <div class="dest on" id="m0" onclick="toggleMes(0)">
+        <div class="demi">🐣</div>
+        <div><div class="dname">Páscoa 2027</div><div class="ddesc" style="color:#e05c00">💎 Mais diamantes necessários</div></div>
+        <div class="dchk on" id="mc0"></div>
+      </div>
+      <div class="dest" id="m1" onclick="toggleMes(1)">
+        <div class="demi">☀️</div>
+        <div><div class="dname">Julho / Agosto 2027</div><div class="ddesc" style="color:#e05c00">💎 Mais diamantes necessários</div></div>
+        <div class="dchk" id="mc1"></div>
+      </div>
+      <div class="dest" id="m2" onclick="toggleMes(2)">
+        <div class="demi">📅</div>
+        <div><div class="dname">Indiferente</div><div class="ddesc" style="color:var(--tu)">💎 Sobram mais para cashback/voucher</div></div>
+        <div class="dchk" id="mc2"></div>
+      </div>
+    </div>
+    <button class="pbtn2" onclick="fecharMes()">Confirmar Voto 💎</button>
+    <span class="pskip" onclick="fecharMes()">Votar Mais Tarde</span>
+  </div>
+</div>
+
+<!-- POPUP VOTAÇÃO DESTINO CRUZEIRO -->
+<div class="ovl" id="vpop" style="z-index:100">
+  <div class="pop">
+    <button class="pclose" onclick="fecharVoto()">✕</button>
+    <div class="ph"></div>
+    <div class="phd">
+      <div class="pht">🚢 Para Onde Vamos em 2027?</div>
+      <div class="phs">Podes votar em mais do que um destino.</div>
+      <div class="pvi"><div class="pvp">🔥 3 votos</div><div class="pvp">💎 2 votos</div><div class="pvp">🪐 1 voto</div></div>
+    </div>
+    <div class="dests">
+      <div class="dest on" id="d0" onclick="toggleDest(0)">
+        <div class="demi">🏛️</div>
+        <div><div class="dname">Ilhas Gregas</div><div class="ddesc">Santorini, Mikonos, Rodes</div></div>
+        <div class="dchk on" id="dc0"></div>
+      </div>
+      <div class="dest" id="d1" onclick="toggleDest(1)">
+        <div class="demi">⛵</div>
+        <div><div class="dname">Mediterrâneo</div><div class="ddesc">Itália, França, Espanha</div></div>
+        <div class="dchk" id="dc1"></div>
+      </div>
+      <div class="dest" id="d2" onclick="toggleDest(2)">
+        <div class="demi">🌴</div>
+        <div><div class="dname">Ilhas Canárias</div><div class="ddesc">Tenerife, Gran Canaria</div></div>
+        <div class="dchk" id="dc2"></div>
+      </div>
+      <div class="altd" id="d3" onclick="toggleDest(3)">
+        <div class="demi">🔄</div>
+        <div><div class="dname">Prefiro uma Alternativa ao Cruzeiro</div><div class="ddesc">Sem equivalência garantida</div></div>
+        <div class="altchk" id="dc3"></div>
+      </div>
+    </div>
+    <button class="pbtn2" onclick="fecharVoto()">Confirmar Voto 💎</button>
+    <span class="pskip" onclick="fecharVoto()">Votar Mais Tarde</span>
+  </div>
+</div>
+
+</div><!-- fim app -->
+</div><!-- fim phone -->
+
+<script>
+// Limpa dados de versões anteriores (storage API) que possam conflituar
+['o_sess','orif_session'].forEach(k=>{try{localStorage.removeItem(k);}catch(e){}});
+
+const DB={};
+const VER='v4_';// prefixo para esta versão
+
+function go(id){
+  document.querySelectorAll('.sc').forEach(s=>s.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  try{document.querySelector('#'+id+' .scr').scrollTop=0;}catch(e){}
+}
+
+function showPop(id){document.getElementById(id).classList.add('on');}
+function hidePop(id){document.getElementById(id).classList.remove('on');}
+
+// Popup votação cruzeiro
+function abrirVoto(){document.getElementById('vpop').classList.add('on');}
+function fecharVoto(){document.getElementById('vpop').classList.remove('on');}
+
+// Popup votação mês
+function abrirMes(){document.getElementById('mpop').classList.add('on');}
+function fecharMes(){document.getElementById('mpop').classList.remove('on');}
+
+// Toggle destinos cruzeiro
+const destSel=[true,false,false,false];
+function toggleDest(n){
+  destSel[n]=!destSel[n];
+  [0,1,2,3].forEach(i=>{
+    const d=document.getElementById('d'+i);
+    const c=document.getElementById('dc'+i);
+    if(destSel[i]){
+      if(i<3){d.classList.add('on');c.classList.add('on');}
+      else{d.style.borderColor='var(--ro)';d.style.background='var(--rl)';}
+    } else {
+      if(i<3){d.classList.remove('on');c.classList.remove('on');}
+      else{d.style.borderColor='';d.style.background='';}
+    }
+  });
+}
+
+// Toggle mês (single select)
+let mesSel=0;
+function toggleMes(n){
+  mesSel=n;
+  [0,1,2].forEach(i=>{
+    document.getElementById('m'+i).classList.toggle('on',i===n);
+    document.getElementById('mc'+i).classList.toggle('on',i===n);
+  });
+}
+
+function olho(inputId,btn){
+  const inp=document.getElementById(inputId);
+  if(inp.type==='password'){
+    inp.type='text';
+    btn.querySelector('svg').innerHTML='<path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>';
+  }else{
+    inp.type='password';
+    btn.querySelector('svg').innerHTML='<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+  }
+}
+
+function kf(e){return VER+'u_'+e.trim().toLowerCase().replace(/[^a-z0-9]/g,'_');}
+
+function showMsg(id,txt,err){
+  const el=document.getElementById(id);
+  el.textContent=txt;
+  el.style.cssText='display:block;background:'+(err?'#fef2f2':'#f0fdf4')+';color:'+(err?'#dc2626':'#16a34a')+';border-radius:10px;padding:9px 12px;font-size:11px;margin-bottom:10px';
+}
+function hideMsg(id){document.getElementById(id).style.display='none';}
+
+function setUI(u){
+  const ini=u.nome.trim().substring(0,2).toUpperCase();
+  document.getElementById('hn').textContent=u.nome;
+  document.getElementById('ht').textContent=u.tier||'🌱 Starter';
+  document.getElementById('pav_ini').textContent=ini;
+  document.getElementById('pav_nome').textContent=u.nome;
+  document.getElementById('pav_tier').textContent=u.tier||'🌱 Starter';
+  document.getElementById('pod_av').textContent=ini;
+  document.getElementById('pod_nome').innerHTML=u.nome+' '+(u.tier||'🌱')+' <span style="font-size:9px;color:var(--tu)">• Tu</span>';
+}
+
+function save(u){
+  DB[kf(u.email)]=u;
+  try{
+    localStorage.setItem(kf(u.email),JSON.stringify(u));
+    localStorage.setItem(VER+'sess',JSON.stringify(u));
+  }catch(e){}
+}
+
+function find(email){
+  const k=kf(email);
+  if(DB[k])return DB[k];
+  try{const s=localStorage.getItem(k);if(s)return JSON.parse(s);}catch(e){}
+  return null;
+}
+
+function doReg(){
+  hideMsg('rerr');
+  const nome=document.getElementById('rn').value.trim();
+  const email=document.getElementById('re').value.trim();
+  const telm=document.getElementById('rt').value.trim();
+  const pass=document.getElementById('rp').value;
+  const pass2=document.getElementById('rp2').value;
+  if(!nome){showMsg('rerr','Introduz o teu nome.',true);return;}
+  if(!email){showMsg('rerr','Introduz o teu email.',true);return;}
+  if(!pass){showMsg('rerr','Escolhe uma password.',true);return;}
+  if(pass!==pass2){showMsg('rerr','As passwords não coincidem.',true);return;}
+  const u={nome,email,telm,pass,tier:'🌱 Starter',diamantes:20};
+  save(u);
+  document.getElementById('ct').textContent='Bem-vinda, '+nome+'! 💎';
+  setUI(u);
+  go('conf');
+}
+
+function doLogin(){
+  hideMsg('lerr');
+  const email=document.getElementById('le').value.trim();
+  const pass=document.getElementById('lp').value;
+  if(!email){showMsg('lerr','Introduz o teu email.',true);return;}
+  if(!pass){showMsg('lerr','Introduz a tua password.',true);return;}
+  const u=find(email);
+  if(!u){showMsg('lerr','Email não encontrado. Cria conta primeiro.',true);return;}
+  if(u.pass!==pass){showMsg('lerr','Password incorreta. Tenta de novo.',true);return;}
+  save(u);
+  setUI(u);
+  hidePop('lpop');
+  go('home');
+}
+
+function doEsq(){
+  hideMsg('eerr');
+  document.getElementById('eok').style.display='none';
+  const email=document.getElementById('ee').value.trim();
+  if(!email){showMsg('eerr','Introduz o teu email.',true);return;}
+  const u=find(email);
+  if(!u){showMsg('eerr','Email não encontrado.',true);return;}
+  showMsg('eok','🔑 A tua password é: '+u.pass,false);
+}
+
+function sair(){
+  try{localStorage.removeItem(VER+'sess');}catch(e){}
+  go('splash');
+}
+
+function selE(n){
+  [0,1].forEach(i=>{
+    document.getElementById('e'+i).classList.toggle('on',i===n);
+    document.getElementById('ec'+i).classList.toggle('on',i===n);
+  });
+}
+
+function addR(){
+  const t=document.getElementById('extrar');
+  const r=document.createElement('div');
+  r.className='ptr';
+  r.innerHTML='<input placeholder="Nome..."/><input placeholder="Cód."/><input placeholder="€"/>';
+  t.appendChild(r);
+}
+
+// Init — verifica sessão desta versão
+try{
+  const s=localStorage.getItem(VER+'sess');
+  if(s){
+    const u=JSON.parse(s);
+    DB[kf(u.email)]=u;
+    setUI(u);
+    go('home');
+  } else {
+    go('splash');
+  }
+}catch(e){go('splash');}
+</script>
+</body></html>
